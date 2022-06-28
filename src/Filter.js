@@ -1,24 +1,17 @@
-import {useState} from 'react'
-import TodoList from './TodoList'
+import {useState, useEffect} from 'react'
 import {Select, MenuItem, Typography, Grid} from '@material-ui/core'
-
-const FILTERS = {
-  COMPLETE: 'complete',
-  INCOMPLETE: 'incomplete',
-  ALL: 'all',
-}
-const Filter = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
+import {FILTERS} from './store/todos/todosSlice'
+import { useDispatch } from 'react-redux'
+import {setFilteredTodos} from './store/todos/todosSlice'
+import {useSelector} from 'react-redux'
+const Filter = () => {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState(FILTERS.ALL)
-
-  const filteredTodos = () => {
-    if(filter === FILTERS.COMPLETE){
-      return todos.filter(todo => todo.isComplete)
-    }
-    if(filter === FILTERS.INCOMPLETE){
-      return todos.filter(todo => !todo.isComplete)
-    }
-    return todos
-  }
+  const todos = useSelector(state => state.todos.todos)
+  
+  useEffect(() => {
+    dispatch(setFilteredTodos(filter))
+  }, [todos, filter, dispatch])
 
   return (
     <>
@@ -27,19 +20,17 @@ const Filter = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
           <Typography variant="h4">Todo List</Typography>
         </Grid>
         <Grid item>
-          <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <Select value={filter} onChange={(e) => {
+            setFilter(e.target.value)
+          }}>
+                        <MenuItem value={FILTERS.ALL}>Show All</MenuItem>
+
             <MenuItem value={FILTERS.INCOMPLETE}>Incomplete items</MenuItem>
-            <MenuItem value={FILTERS.ALL}>Show All</MenuItem>
             <MenuItem value={FILTERS.COMPLETE}>Completed items</MenuItem>
           </Select>
         </Grid>
       </Grid>
-      <TodoList
-        todos={filteredTodos()}
-        toggleIsComplete={toggleIsComplete}
-        changeLabel={changeLabel}
-        toggleIsEditing={toggleIsEditing}
-      />
+     
     </>
   );
 }

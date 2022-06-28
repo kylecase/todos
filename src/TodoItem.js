@@ -3,16 +3,19 @@ import {Grid, IconButton, Typography, Button, TextField} from '@material-ui/core
 import CompleteIcon from "@material-ui/icons/CheckCircle";
 import IncompleteIcon from "@material-ui/icons/CheckCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
-const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
+import { useDispatch } from 'react-redux';
+import { changeLabel, toggleIsComplete, toggleIsEditing} from './store/todos/todosSlice'
+const TodoItem = ({todo}) => {
+  const dispatch = useDispatch()
   const [newLabel, setNewLabel] = useState('')
 
   useEffect(() => {
     setNewLabel(todo.label)
   }, [todo.label])
-
+  
   const handleCancel = () => {
-    changeLabel(todo.id, todo.label)
-    toggleIsEditing(todo.id)
+    dispatch(changeLabel({id: todo.id, newLabel: todo.label}))
+    dispatch(toggleIsEditing(todo.id))
   }
   return (
     <Grid container spacing={2} alignItems="center">
@@ -20,8 +23,8 @@ const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
         <Grid item>
           <form onSubmit={(e) => {
             e.preventDefault()
-            changeLabel(todo.id, newLabel)
-            toggleIsEditing(todo.id)
+            dispatch(changeLabel({id: todo.id, newLabel: newLabel}))
+            dispatch(toggleIsEditing(todo.id))
           }}>
             <TextField
               value={newLabel}
@@ -41,10 +44,10 @@ const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton onClick={() => toggleIsComplete(todo.id)}>
+            <IconButton onClick={() => dispatch(toggleIsComplete(todo.id))}>
               {todo?.isComplete ? <CompleteIcon /> : <IncompleteIcon />}
             </IconButton>
-            <IconButton onClick={() => toggleIsEditing(todo.id)}>
+            <IconButton onClick={() => dispatch(toggleIsEditing(todo.id))}>
               <EditIcon/>
             </IconButton>
           </Grid>

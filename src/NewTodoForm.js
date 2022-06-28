@@ -1,13 +1,17 @@
 import {useState} from 'react'
 import {TextField, Button, Grid} from '@material-ui/core'
+import { useDispatch } from 'react-redux'
+import {addTodo} from './store/todos/todosSlice'
 
-const NewTodoForm = ({addTodo}) => {
+const NewTodoForm = () => {
+  const dispatch = useDispatch()
   const [todoLabel, setTodoLabel] = useState('')
 
   const handleAddTodo = () => {
-    addTodo(todoLabel)
+    dispatch(addTodo(todoLabel))
     setTodoLabel('')
   }
+  
   return (
     <form
       onSubmit={(e) => {
