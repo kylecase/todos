@@ -41,6 +41,7 @@ function App() {
        }
        return todo;
      });
+     console.log('the new array is: ', newArray)
      setTodos(newArray);
   }
   return (
