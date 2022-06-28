@@ -7,7 +7,7 @@ const FILTERS = {
   INCOMPLETE: 'incomplete',
   ALL: 'all',
 }
-const Filter = ({todos, editTodo}) => {
+const Filter = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
   const [filter, setFilter] = useState(FILTERS.ALL)
 
   const filteredTodos = () => {
@@ -34,7 +34,12 @@ const Filter = ({todos, editTodo}) => {
           </Select>
         </Grid>
       </Grid>
-      <TodoList todos={filteredTodos()} editTodo={editTodo}/>
+      <TodoList
+        todos={filteredTodos()}
+        toggleIsComplete={toggleIsComplete}
+        changeLabel={changeLabel}
+        toggleIsEditing={toggleIsEditing}
+      />
     </>
   );
 }
