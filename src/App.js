@@ -21,6 +21,7 @@ function App() {
     setTodos(newArray)
   }
 
+  
   const changeLabel = (id, newLabel) => {
     console.log('changing label to: ', newLabel)
     const newArray = todos.map((todo) => {

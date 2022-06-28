@@ -14,6 +14,7 @@ const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
     changeLabel(todo.id, todo.label)
     toggleIsEditing(todo.id)
   }
+  
   return (
     <Grid container spacing={2} alignItems="center">
       {todo?.isEditing ? (

@@ -19,6 +19,7 @@ const TodoList = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
         )}
       </Grid>
     </>
+    
   );
 }
  
