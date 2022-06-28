@@ -3,7 +3,7 @@ import {Grid, IconButton, Typography, Button, TextField} from '@material-ui/core
 import CompleteIcon from "@material-ui/icons/CheckCircle";
 import IncompleteIcon from "@material-ui/icons/CheckCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
-const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
+const TodoItem = ({todo, editTodo}) => {
   const [newLabel, setNewLabel] = useState('')
 
   useEffect(() => {
@@ -11,18 +11,20 @@ const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
   }, [todo.label])
 
   const handleCancel = () => {
-    changeLabel(todo.id, todo.label)
-    toggleIsEditing(todo.id)
+    editTodo(todo.id, {
+      ...todo,
+      isEditing: false
+    })
+    newLabel(todo.label)
   }
-  
+
   return (
     <Grid container spacing={2} alignItems="center">
       {todo?.isEditing ? (
         <Grid item>
           <form onSubmit={(e) => {
             e.preventDefault()
-            changeLabel(todo.id, newLabel)
-            toggleIsEditing(todo.id)
+            editTodo(todo.id, {...todo, label: newLabel, isEditing: false})
           }}>
             <TextField
               value={newLabel}
@@ -42,10 +44,10 @@ const TodoItem = ({todo, changeLabel, toggleIsComplete, toggleIsEditing}) => {
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton onClick={() => toggleIsComplete(todo.id)}>
+            <IconButton onClick={() => editTodo(todo.id, {...todo, isComplete: !todo.isComplete})}>
               {todo?.isComplete ? <CompleteIcon /> : <IncompleteIcon />}
             </IconButton>
-            <IconButton onClick={() => toggleIsEditing(todo.id)}>
+            <IconButton onClick={() => editTodo(todo.id, {...todo, isEditing: true})}>
               <EditIcon/>
             </IconButton>
           </Grid>

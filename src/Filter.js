@@ -20,7 +20,6 @@ const Filter = ({todos, editTodo}) => {
     return todos
   }
 
-  
   return (
     <>
       <Grid container spacing={4} alignItems="center">

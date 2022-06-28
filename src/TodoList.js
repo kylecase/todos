@@ -1,6 +1,6 @@
 import {Typography, Grid} from '@material-ui/core'
 import TodoItem from './TodoItem'
-const TodoList = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
+const TodoList = ({todos, editTodo}) => {
   return (
     <>
       <Grid container direction="column" alignItems="flex-start" style={{marginTop: '1.5rem'}}>
@@ -8,7 +8,7 @@ const TodoList = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
           todos.map((todo) => {
             return (
               <Grid item key={todo.id}>
-                <TodoItem todo={todo} toggleIsComplete={toggleIsComplete} changeLabel={changeLabel} toggleIsEditing={toggleIsEditing}/>
+                <TodoItem todo={todo} editTodo={editTodo}/>
               </Grid>
             );
           })
@@ -19,7 +19,7 @@ const TodoList = ({todos, toggleIsComplete, changeLabel, toggleIsEditing}) => {
         )}
       </Grid>
     </>
-    
+
   );
 }
  

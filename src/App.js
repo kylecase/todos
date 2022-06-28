@@ -11,39 +11,16 @@ function App() {
     setTodos([...todos, {label, isComplete: false, id: uuidv4(), isEditing: false }])
   }
 
-  const toggleIsComplete = (id) => {
-    const newArray = todos.map(todo => {
-      if(todo.id === id){
-        return {...todo, isComplete: !todo.isComplete}
-      }
-      return todo
-    })
-    setTodos(newArray)
-  }
-
-  
-  const changeLabel = (id, newLabel) => {
-    console.log('changing label to: ', newLabel)
+  const editTodo = (id, newTodo) => {
     const newArray = todos.map((todo) => {
       if (todo.id === id) {
-        return { ...todo, label: newLabel };
+        return { ...newTodo };
       }
       return todo;
     });
-    console.log('the new array is: ', newArray)
     setTodos(newArray);
   }
 
-  const toggleIsEditing = (id) => {
-    console.log('toggling is editing...')
-     const newArray = todos.map((todo) => {
-       if (todo.id === id) {
-         return { ...todo, isEditing: !todo.isEditing };
-       }
-       return todo;
-     });
-     setTodos(newArray);
-  }
   return (
     <div className="App" style={{ margin: "0.75rem" }}>
       <Grid container>
@@ -54,7 +31,7 @@ function App() {
         </Grid>
       </Grid>
       <Grid container alignItems="flex-start" style={{ marginTop: "2rem" }}>
-        <Filter todos={todos} toggleIsComplete={toggleIsComplete} changeLabel={changeLabel} toggleIsEditing={toggleIsEditing} />
+        <Filter todos={todos} editTodo={editTodo} />
       </Grid>
     </div>
   );
